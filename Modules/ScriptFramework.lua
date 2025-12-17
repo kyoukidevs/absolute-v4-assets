@@ -75,10 +75,10 @@ do
     end
 
     do
-        Drawings.new = function(Name, Props) -- // Works Shitty Rn Will Fix After I Buy New Executor
+        Drawings.new = function(Name, Props)
             local Drawing = Drawing.new(Name)
             for Index, Prop in next, Props do
-                Drawing[Index] = Value
+                Drawing[Index] = Prop
             end
             table.insert(framework.Drawings, Drawing)
             return Drawing
