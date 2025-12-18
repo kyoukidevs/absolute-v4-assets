@@ -60,7 +60,7 @@ do
                     Class = Class
                 }
 
-                setmetatable(Instance, Instances)
+                --setmetatable(Instance, Instances)
 
                 for Prop, Value in Instance.Props do
                     Instance.Props[Prop] = Value
