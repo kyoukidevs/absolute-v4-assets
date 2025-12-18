@@ -3,6 +3,7 @@
 Added Drawings Module
 Fixed Signals
 ]]
+local IsLibrary = getgenv().IsLibrary
 
 local framework = {
     Instances = {},
@@ -35,19 +36,45 @@ do
     local Drawings = {}
 
     do
-        Instances.new = function(Class, Props)
-            local inst = Instance.new(Class)
-
-            for Index, Value in next, Props do
-                inst[Index] = Value
+        if not IsLibrary then
+            Instances.new = function(Class, Props)
+                local inst = Instance.new(Class)
+    
+                for Index, Value in next, Props do
+                    inst[Index] = Value
+                end
+                table.insert(framework.Instances, inst)
+                return inst
             end
-            table.insert(framework.Instances, inst)
-            return inst
-        end
+    
+            Instances.unload = function()
+                for _, Value in pairs(framework.Instances) do
+                    Value:Destroy()
+                end
+            end
+        else
+            Instances.new = function(Class, Props)
+                local Instance = {
+                    Instance = Instance.new(Class),
+                    Props = Props,
+                    Class = Class
+                }
 
-        Instances.unload = function()
-            for _, Value in pairs(framework.Instances) do
-                Value:Destroy()
+                setmetatable(Instance, Instances)
+
+                for Prop, Value in Instance.Props do
+                    Instance.Props[Prop] = Value
+                end
+
+                table.insert(framework.Instances, Instance)
+                return Instance
+            end
+
+            Instances.unload = function()
+                for _, Value in pairs(framework.Instances) do
+                    Value.Instance:Destroy()
+                    Value = nil
+                end
             end
         end
 
