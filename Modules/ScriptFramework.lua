@@ -1,7 +1,6 @@
 -- // My Rewrited Framework
 --[[ // Update Logs:
-Added Drawings Module
-Fixed Signals
+Added Check For IsLibrary
 ]]
 local IsLibrary = getgenv().IsLibrary
 
