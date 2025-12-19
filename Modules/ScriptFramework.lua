@@ -4,6 +4,8 @@ Added Check For IsLibrary
 ]]
 local IsLibrary = getgenv().IsLibrary
 
+print(IsLibrary)
+
 local framework = {
     Instances = {},
     Services = setmetatable({}, {
