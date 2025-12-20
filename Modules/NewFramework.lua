@@ -136,10 +136,11 @@ do
     end
 
     do
-        Misc.Tween = function(...)
-            local Tween = game:GetService("TweenService"):Create(...)
+        Misc.Tween = function(Object, Info, Prop)
+            local Tween = game:GetService("TweenService"):Create(Object, Info, Prop)
 
             Tween:Play()
+            return Tween
         end
 
         Framework.Modules.Misc = Misc
