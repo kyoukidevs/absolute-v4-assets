@@ -143,3 +143,5 @@ do
         Framework.Modules.Misc = Misc
     end
 end
+
+return Framework
