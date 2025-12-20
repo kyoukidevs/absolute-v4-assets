@@ -66,6 +66,8 @@ do
             end
 
             table.insert(Framework.Drawings, Drawing)
+
+            return Drawing
         end
 
         Drawings.unload = function()
