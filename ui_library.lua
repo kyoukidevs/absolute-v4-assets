@@ -19,26 +19,9 @@ ScreenGui.Parent = CoreGui;
 
 local Toggles = {};
 local Options = {};
-local Flags = setmetatable({},{
-    __index = function(self, value)
-        if Toggles[Value] then
-            return Toggles[value].Value
-        elseif Options[value] then
-            local success, data = pcall(function()
-                return Options[value]:GetState()
-            end)
-            if success then
-                return data
-            end
-
-            return Options[value].Value
-        end
-    end
-})
 
 getgenv().Toggles = Toggles;
 getgenv().Options = Options;
-getgenv().Flags = Flags;
 
 local Library = {
     Registry = {};
