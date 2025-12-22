@@ -1,17 +1,17 @@
---[[
+    --[[
 New Framework, Many New Modules & More
 ]]
 
 local Framework = {
-  Instances = {},
-  Drawings = {},
-  Services = setmetatable({}, {
-      __index = function(self, service)
-          local string = service:gsub("_", ""):gsub("^%1", string.upper)
-          local instance = game:GetService(string)
-          rawset(self, service, instance)
-          return instance
-      end
+    Instances = {},
+    Drawings = {},
+    Services = setmetatable({}, {
+        __index = function(self, service)
+            local string = service:gsub("_", ""):gsub("^%1", string.upper)
+            local instance = game:GetService(string)
+            rawset(self, service, instance)
+            return instance
+        end
     }),
     Connections = {},
     Threads = {},
@@ -34,6 +34,7 @@ do
     local Signals = {}
     local Math = {}
     local Misc = {}
+    local Threads = {}
 
     do
         Instances.new = function(Class, Properties)
@@ -87,7 +88,7 @@ do
 
             return Connection
         end
---[[
+
         Signals.thread = function(Name, Callback, Type)
             local Thread = setmetatable({
                 Name = Name,
@@ -105,7 +106,7 @@ do
             Framework.Threads[Type][Index] = Thread 
             return Framework.Threads[Type][Index]
         end
-]]
+
         Signals.unload = function()
             for _, Connection in next, Framework.Connections do
                 Connection:Disconnect()
@@ -113,7 +114,7 @@ do
 
             --for _, Thread in next, Framework.Threads do
             --    Thread = nil
-           -- end
+        -- end
         end
 
         Framework.Modules.Signals = Signals
@@ -145,6 +146,36 @@ do
 
         Framework.Modules.Misc = Misc
     end
-end
 
-return Framework
+    do
+        Threads.__index = Threads 
+
+        Threads.new = function(Name, Callback, Type)
+            local Thread = setmetatable({
+                Name = Name,
+                Callback = Callback,
+                Type = Type
+            }, Threads)
+
+            if not Type then
+                Type = "Render"
+            end
+
+            Thread.Type = Type
+
+            local Index = #Threads[Type] + 1
+            Threads[Type][Index] = Thread 
+            return Threads[Type][Index]
+        end
+
+        Threads.run = function(self)
+            local Success, Error = pcall(self.Callback)
+
+            if not Success and Error then
+                return Error 
+            end
+        end
+
+        Framework.Modules.Threads = Threads 
+    end
+end
