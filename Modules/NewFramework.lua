@@ -179,3 +179,5 @@ do
         Framework.Modules.Threads = Threads 
     end
 end
+
+return Framework
