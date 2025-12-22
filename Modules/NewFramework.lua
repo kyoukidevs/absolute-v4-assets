@@ -97,12 +97,12 @@ do
             }, Framework.Threads)
 
             if not Type then
-                Type = "RenderStepped"
+                Type = "Rendering"
             end
 
             Thread.Type = Type 
 
-            local Index = #Framework.Threads[Callback] + 1
+            local Index = #Framework.Threads[Type] + 1
             Framework.Threads[Type][Index] = Thread 
             return Framework.Threads[Type][Index]
         end
