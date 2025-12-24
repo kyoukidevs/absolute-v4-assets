@@ -34,7 +34,11 @@ do
     local Signals = {}
     local Math = {}
     local Misc = {}
-    local Threads = {}
+    local Threads = {
+        Entity = {},
+        Client = {},
+        Render = {}
+    }
 
     do
         Instances.new = function(Class, Properties)
